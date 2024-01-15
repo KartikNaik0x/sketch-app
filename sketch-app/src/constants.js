@@ -7,3 +7,5 @@ const COLORS = {
     YELLOW: 'yellow',
     WHITE: 'white'
 }
+
+export {COLORS}
