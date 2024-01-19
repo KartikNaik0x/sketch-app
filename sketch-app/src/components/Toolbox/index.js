@@ -1,11 +1,11 @@
 import styles from './index.module.css'
 import {COLORS} from '@/constants'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
 
 
 const Toolbox = () =>{
-
-    const activeMenuItem = useSelector((state)=> state.menu.activeMenuItem)
+    const dispatch = useDispatch()
+    const activeMenuItem = useSelector((state) => state.menu.activeMenuItem)
 
     const updateBrushSize = (e) =>{
 
