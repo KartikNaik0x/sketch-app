@@ -1,8 +1,12 @@
 import { MENU_ITEMS } from "@/constants";
 import { useEffect, useLayoutEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { menuItemClick,actionItemClick} from '@/Slice/menuSlice'
+
 
 const Board = () =>{
+
+    const dispatch = useDispatch()
 
     const {activeMenuItem,actionMenuItem} = useSelector((state) => state.menu)
     const {color , size } = useSelector((state) => state.toolbox[activeMenuItem])
@@ -23,7 +27,8 @@ const Board = () =>{
             console.log(url)
         }
         console.log("actionMenuItem",actionMenuItem)
-    },[actionMenuItem])
+        dispatch(actionItemClick(null))
+    },[actionMenuItem,dispatch])
   
     useEffect(()=>{
         if(!canvasRef.current) return
