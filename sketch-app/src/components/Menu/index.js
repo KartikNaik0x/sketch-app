@@ -2,25 +2,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faEraser , faRotateLeft , faRotateRight , faFileArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { menuItemClick,actionItemClick} from '@/Slice/menuSlice'
 import styles from './index.module.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { MENU_ITEMS } from '@/constants'
 import cx from 'classnames'
-import classNames from 'classnames'
+
 
 const Menu = () => {
 
     const dispatch = useDispatch()
 
+    const activeMenuItem = useSelector((state) => state.menu.activeMenuItem)
+
     const handleMenuClick= (itemName)=>{
-        console.log(itemName)
+        console.log()
         dispatch(menuItemClick(itemName))
     }
     return (
         <div className={styles.menuContainer}>
-            <div className={styles.iconWrapper} onClick = {()=>handleMenuClick(MENU_ITEMS.PENCIL)}>
+            <div className={cx(styles.iconWrapper, {[styles.active]: activeMenuItem === MENU_ITEMS.PENCIL})} onClick = {()=>handleMenuClick(MENU_ITEMS.PENCIL)}>
                 <FontAwesomeIcon icon={faPencil} className={styles.icon} />
             </div>
-            <div className={styles.iconWrapper} onClick = {()=>handleMenuClick(MENU_ITEMS.ERASER)}>
+            <div className={cx(styles.iconWrapper, {[styles.active]: activeMenuItem === MENU_ITEMS.ERASER})} onClick = {()=>handleMenuClick(MENU_ITEMS.ERASER)}>
                 <FontAwesomeIcon icon={faEraser} className={styles.icon} />
             </div>
             <div className={styles.iconWrapper}>
