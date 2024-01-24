@@ -13,6 +13,8 @@ const Board = () =>{
 
     const canvasRef = useRef(null);
     const shouldDraw = useRef(false);
+    const history = useRef([]);
+    const pointer = useRef(0);
 
     useEffect(()=>{
         if(!canvasRef.current) return
@@ -25,6 +27,13 @@ const Board = () =>{
              anchor.download = 'yoursketch.jpg'
              anchor.click()
             console.log(url)
+        }else if(actionMenuItem === MENU_ITEMS.UNDO || actionMenuItem === MENU_ITEMS.REDO){
+            
+            if(pointer.current > 0 && actionMenuItem === MENU_ITEMS.UNDO) pointer.current = pointer.current -1;
+            if(pointer.current < history.current.length -1 && actionMenuItem === MENU_ITEMS.REDO) pointer.current = pointer.current + 1;
+            const imageData = history.current[pointer.current];
+            context.putImageData(imageData, 0 , 0);
+            console.log("Decrement",pointer.current)
         }
         console.log("actionMenuItem",actionMenuItem)
         dispatch(actionItemClick(null))
@@ -74,6 +83,11 @@ const Board = () =>{
 
         const handleMouseUp=(e)=>{
             shouldDraw.current= false
+            const imageData = context.getImageData(0,0,canvas.width, canvas.height);
+            history.current.push(imageData);
+            console.log(history);
+            pointer.current = history.current.length - 1;
+            console.log("length",pointer.current )
         }
 
         const handleMouseMove=(e)=>{
